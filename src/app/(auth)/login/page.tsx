@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useAppDispatch } from '@/store/hooks';
 import { useAuth } from '@/hooks/useAuth';
 import { loginThunk, clearError } from '@/store/slices/authSlice';
@@ -20,10 +20,27 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
+// ─── Tách riêng component dùng useSearchParams ────────────────────────────
+function ForbiddenAlert() {
+  const searchParams = useSearchParams();
+  const isForbidden = searchParams.get('error') === 'forbidden';
+
+  if (!isForbidden) return null;
+
+  return (
+    <Alert variant="destructive">
+      <AlertCircle className="h-4 w-4" />
+      <AlertDescription>
+        Access denied. Admin role required.
+      </AlertDescription>
+    </Alert>
+  );
+}
+
+// ─── Main page component ──────────────────────────────────────────────────
 export default function LoginPage() {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { isAuthenticated, isSubmitting, error, user } = useAuth();
 
   const {
@@ -32,7 +49,6 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
-  // Redirect nếu đã login
   useEffect(() => {
     if (isAuthenticated && user?.role?.name?.toUpperCase() === 'ADMIN') {
       router.replace('/dashboard');
@@ -43,8 +59,6 @@ export default function LoginPage() {
     dispatch(clearError());
     dispatch(loginThunk(data));
   };
-
-  const isForbidden = searchParams.get('error') === 'forbidden';
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#0a0a0f] px-4">
@@ -62,15 +76,12 @@ export default function LoginPage() {
           </div>
         </div>
 
-        {/* Alerts */}
-        {isForbidden && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertDescription>
-              Access denied. Admin role required.
-            </AlertDescription>
-          </Alert>
-        )}
+        {/* ✅ Wrap trong Suspense — bắt buộc cho useSearchParams */}
+        <Suspense fallback={null}>
+          <ForbiddenAlert />
+        </Suspense>
+
+        {/* Error từ Redux */}
         {error && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -112,9 +123,7 @@ export default function LoginPage() {
             className="w-full bg-violet-600 hover:bg-violet-700"
             disabled={isSubmitting}
           >
-            {isSubmitting && (
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            )}
+            {isSubmitting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
             Sign In
           </Button>
         </form>
