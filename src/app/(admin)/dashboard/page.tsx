@@ -52,9 +52,9 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <div>
         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
-          Admin / Dashboard
+          Quản Trị / Bảng Điều Khiển
         </p>
-        <h1 className="text-2xl font-bold">System Overview</h1>
+        <h1 className="text-2xl font-bold">Tổng Quan Hệ Thống</h1>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -69,23 +69,23 @@ export default function DashboardPage() {
         ) : (
           <>
             <StatCard
-              title="Total Users"
+              title="Tổng Người Dùng"
               value={data?.totalUsers.toLocaleString() ?? '—'}
-              sub={`+${data?.userGrowth ?? 0}% vs last month`}
+              sub={`+${data?.userGrowth ?? 0}% so với tháng trước`}
               icon={Users}
               iconColor="bg-blue-500/15 text-blue-400"
             />
             <StatCard
-              title="Active Streams"
+              title="Stream Đang Phát"
               value={data?.activeStreams.toLocaleString() ?? '—'}
-              sub="● LIVE NOW"
+              sub="● ĐANG PHÁT"
               icon={Zap}
               iconColor="bg-violet-500/15 text-violet-400"
             />
             <StatCard
-              title="Today's Revenue"
+              title="Doanh Thu Hôm Nay"
               value={`$${data?.todayRevenue.toLocaleString() ?? '—'}`}
-              sub={`+$${data?.revenueGrowth ?? 0} since midnight`}
+              sub={`+$${data?.revenueGrowth ?? 0} kể từ nửa đêm`}
               icon={DollarSign}
               iconColor="bg-emerald-500/15 text-emerald-400"
             />

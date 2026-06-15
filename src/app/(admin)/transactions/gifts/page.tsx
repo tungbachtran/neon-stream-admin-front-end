@@ -46,7 +46,7 @@ export default function GiftTransactionsPage() {
     },
     {
       key: 'gift',
-      header: 'Gift',
+      header: 'Quà Tặng',
       cell: (row) => (
         <div className="flex items-center gap-2">
           <span className="text-xl">{row.gift?.emoji}</span>
@@ -59,7 +59,7 @@ export default function GiftTransactionsPage() {
     },
     {
       key: 'transfer',
-      header: 'Transfer',
+      header: 'Chuyển Giao',
       cell: (row) => (
         <div className="flex items-center gap-2 text-sm">
           <span className="text-violet-400">{row.sender?.username ?? row.senderId.slice(0, 8)}</span>
@@ -70,7 +70,7 @@ export default function GiftTransactionsPage() {
     },
     {
       key: 'diamonds',
-      header: 'Diamonds',
+      header: 'Kim Cương',
       cell: (row) => (
         <div className="flex items-center gap-1.5 text-sm font-medium text-amber-400">
           <Diamond className="h-3.5 w-3.5" />
@@ -80,12 +80,12 @@ export default function GiftTransactionsPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: 'Trạng Thái',
       cell: (row) => <StatusBadge status={row.status} />,
     },
     {
       key: 'createdAt',
-      header: 'Date',
+      header: 'Ngày',
       cell: (row) => (
         <span className="text-sm text-muted-foreground">
           {format(new Date(row.createdAt), 'dd/MM/yyyy HH:mm')}
@@ -112,13 +112,13 @@ export default function GiftTransactionsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Gift Transactions</h1>
-        <p className="text-sm text-muted-foreground">Gift exchange history across all streams</p>
+        <h1 className="text-2xl font-bold">Giao Dịch Quà Tặng</h1>
+        <p className="text-sm text-muted-foreground">Lịch sử trao đổi quà tặng trên tất cả các stream</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
         <SearchInput
-          placeholder="Search by user, gift, idempotency key..."
+          placeholder="Tìm kiếm theo người dùng, quà tặng, khóa idempotency..."
           onSearch={(v) => {
             setSearch(v);
             setPage(1);
@@ -133,10 +133,10 @@ export default function GiftTransactionsPage() {
           }}
         >
           <SelectTrigger className="w-36 h-9">
-            <SelectValue placeholder="All Status" />
+            <SelectValue placeholder="Tất Cả Trạng Thái" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="ALL">All Status</SelectItem>
+            <SelectItem value="ALL">Tất Cả Trạng Thái</SelectItem>
             {['PENDING', 'SUCCESS', 'FAILED', 'REFUNDED'].map((s) => (
               <SelectItem key={s} value={s}>
                 {s}
@@ -153,10 +153,10 @@ export default function GiftTransactionsPage() {
           }}
         >
           <SelectTrigger className="w-44 h-9">
-            <SelectValue placeholder="All Gifts" />
+            <SelectValue placeholder="Tất Cả Quà Tặng" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="ALL">All Gifts</SelectItem>
+            <SelectItem value="ALL">Tất Cả Quà Tặng</SelectItem>
             {(giftsData?.data ?? []).map((gift) => (
               <SelectItem key={gift.id} value={gift.id}>
                 {gift.emoji} {gift.name}
@@ -192,7 +192,7 @@ export default function GiftTransactionsPage() {
           data={data?.data ?? []}
           isLoading={isLoading}
           rowKey={(r) => r.id}
-          emptyMessage="No gift transactions found"
+          emptyMessage="Không tìm thấy giao dịch quà tặng nào"
         />
         {data && (
           <Pagination

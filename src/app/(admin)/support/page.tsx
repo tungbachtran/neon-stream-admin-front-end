@@ -23,7 +23,7 @@ import { Send, X, AlertCircle, Loader2, ChevronUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { format } from 'date-fns';
 import { toast } from 'sonner';
-import { useAuth } from '@/hooks/useAuth'; // thay bằng auth hook của bạn
+import { useAuth } from '@/hooks/useAuth';
 import { ChatConversation } from '@/services/chat.service';
 
 export default function AdminSupportPage() {
@@ -68,7 +68,7 @@ export default function AdminSupportPage() {
     };
 
     const onClosed = () => {
-      toast.info('Conversation closed');
+      toast.info('Cuộc trò chuyện đã đóng');
       setActiveConv(null);
       qc.invalidateQueries({ queryKey: ['chat', 'admin', 'conversations'] });
     };
@@ -102,8 +102,6 @@ export default function AdminSupportPage() {
     setInput('');
   }, [input, activeConv, sendMessage]);
 
-  
-
   // ── Helpers ──
   const getUserLabel = (c: ChatConversation) =>
     c.user?.fullName || c.user?.email || c.userId.slice(0, 8);
@@ -121,7 +119,7 @@ export default function AdminSupportPage() {
       <div className="w-80 flex flex-col border-r border-border shrink-0">
         <div className="p-4 border-b border-border space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-sm">Conversations</h2>
+            <h2 className="font-semibold text-sm">Cuộc Trò Chuyện</h2>
             <Badge
               variant="outline"
               className="bg-violet-500/15 text-violet-400 border-violet-500/30 text-xs"
@@ -131,7 +129,7 @@ export default function AdminSupportPage() {
           </div>
 
           <Input
-            placeholder="Search users..."
+            placeholder="Tìm kiếm người dùng..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="h-8 text-xs"
@@ -145,9 +143,9 @@ export default function AdminSupportPage() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="ACTIVE">Active</SelectItem>
-              <SelectItem value="CLOSED">Closed</SelectItem>
-              <SelectItem value="ALL">All</SelectItem>
+              <SelectItem value="ACTIVE">Đang Hoạt Động</SelectItem>
+              <SelectItem value="CLOSED">Đã Đóng</SelectItem>
+              <SelectItem value="ALL">Tất Cả</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -156,12 +154,12 @@ export default function AdminSupportPage() {
           {loadingConvs ? (
             <div className="flex items-center justify-center h-40 text-muted-foreground text-sm">
               <Loader2 className="h-4 w-4 animate-spin mr-2" />
-              Loading...
+              Đang tải...
             </div>
           ) : filtered.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-40 text-muted-foreground text-sm gap-2">
               <AlertCircle className="h-5 w-5 opacity-40" />
-              No conversations
+              Không có cuộc trò chuyện
             </div>
           ) : (
             filtered.map((conv) => (
@@ -195,7 +193,7 @@ export default function AdminSupportPage() {
                             : 'bg-slate-500/15 text-slate-400 border-slate-500/30',
                         )}
                       >
-                        {conv.status}
+                        {conv.status === 'ACTIVE' ? 'Đang Hoạt Động' : 'Đã Đóng'}
                       </Badge>
                       <span className="text-[10px] text-muted-foreground">
                         {format(new Date(conv.updatedAt), 'HH:mm')}
@@ -225,10 +223,9 @@ export default function AdminSupportPage() {
                 <p className="text-sm font-semibold">
                   {getUserLabel(activeConv)}
                 </p>
-                <p className="text-xs text-emerald-400">● Active</p>
+                <p className="text-xs text-emerald-400">● Đang Hoạt Động</p>
               </div>
             </div>
-           
           </div>
 
           {/* Messages */}
@@ -241,7 +238,7 @@ export default function AdminSupportPage() {
                 onClick={() => setMsgPage((p) => p + 1)}
               >
                 <ChevronUp className="h-4 w-4 mr-1" />
-                Load earlier
+                Tải tin cũ hơn
               </Button>
             )}
 
@@ -251,7 +248,7 @@ export default function AdminSupportPage() {
               </div>
             ) : messages.length === 0 ? (
               <div className="flex justify-center py-10 text-muted-foreground text-sm">
-                No messages yet
+                Chưa có tin nhắn
               </div>
             ) : (
               messages.map((msg) => {
@@ -321,8 +318,8 @@ export default function AdminSupportPage() {
               <Input
                 placeholder={
                   activeConv.status === 'CLOSED'
-                    ? 'Conversation is closed'
-                    : 'Type a message...'
+                    ? 'Cuộc trò chuyện đã đóng'
+                    : 'Nhập tin nhắn...'
                 }
                 value={input}
                 onChange={(e) => {
@@ -351,7 +348,7 @@ export default function AdminSupportPage() {
       ) : (
         <div className="flex flex-col flex-1 items-center justify-center text-muted-foreground gap-3">
           <AlertCircle className="h-10 w-10 opacity-30" />
-          <p className="text-sm">Select a conversation to start chatting</p>
+          <p className="text-sm">Chọn một cuộc trò chuyện để bắt đầu</p>
         </div>
       )}
     </div>

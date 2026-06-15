@@ -22,7 +22,7 @@ export function GiftTransactionDetailModal({
   );
 
   return (
-    <ModalWrapper open={open} onClose={onClose} title="Gift Transaction Detail" size="lg">
+    <ModalWrapper open={open} onClose={onClose} title="Chi Tiết Giao Dịch Quà Tặng" size="lg">
       {isLoading && (
         <div className="flex justify-center py-10">
           <Loader2 className="h-6 w-6 animate-spin" />
@@ -32,16 +32,16 @@ export function GiftTransactionDetailModal({
       {data && (
         <div className="space-y-5 pt-2">
           <section className="rounded-lg border border-border p-4">
-            <h3 className="mb-3 text-sm font-semibold">Transfer</h3>
+            <h3 className="mb-3 text-sm font-semibold">Chuyển Giao</h3>
             <div className="flex items-center justify-between gap-4">
-              <UserCard title="Sender" user={data.sender} fallback={data.senderId} />
+              <UserCard title="Người Gửi" user={data.sender} fallback={data.senderId} />
               <ArrowRight className="h-5 w-5 text-muted-foreground" />
-              <UserCard title="Receiver" user={data.receiver} fallback={data.receiverId} />
+              <UserCard title="Người Nhận" user={data.receiver} fallback={data.receiverId} />
             </div>
           </section>
 
           <section className="rounded-lg border border-border p-4">
-            <h3 className="mb-3 text-sm font-semibold">Gift</h3>
+            <h3 className="mb-3 text-sm font-semibold">Quà Tặng</h3>
             <div className="flex items-center gap-3">
               {data.gift?.iconUrl ? (
                 <img
@@ -63,11 +63,11 @@ export function GiftTransactionDetailModal({
           </section>
 
           <section className="grid grid-cols-2 gap-3 text-sm">
-            <Info label="Transaction ID" value={data.id} />
-            <Info label="Status" value={<StatusBadge status={data.status} />} />
-            <Info label="Quantity" value={`×${data.quantity}`} />
+            <Info label="ID Giao Dịch" value={data.id} />
+            <Info label="Trạng Thái" value={<StatusBadge status={data.status} />} />
+            <Info label="Số Lượng" value={`×${data.quantity}`} />
             <Info
-              label="Total Diamonds"
+              label="Tổng Kim Cương"
               value={
                 <span className="inline-flex items-center gap-1 text-amber-400">
                   <Diamond className="h-3.5 w-3.5" />
@@ -75,10 +75,10 @@ export function GiftTransactionDetailModal({
                 </span>
               }
             />
-            <Info label="Idempotency Key" value={data.idempotencyKey} />
-            <Info label="Stream ID" value={data.streamId} />
+            <Info label="Khóa Idempotency" value={data.idempotencyKey} />
+            <Info label="ID Luồng" value={data.streamId} />
             <Info
-              label="Created At"
+              label="Tạo Lúc"
               value={format(new Date(data.createdAt), 'dd/MM/yyyy HH:mm:ss')}
             />
           </section>

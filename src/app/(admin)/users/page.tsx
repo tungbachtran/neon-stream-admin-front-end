@@ -38,7 +38,7 @@ export default function UsersPage() {
     },
     {
       key: 'user',
-      header: 'User',
+      header: 'Người Dùng',
       cell: (row) => (
         <div className="flex items-center gap-3">
           <Avatar className="h-8 w-8">
@@ -56,7 +56,7 @@ export default function UsersPage() {
     },
     {
       key: 'role',
-      header: 'Role',
+      header: 'Vai Trò',
       cell: (row) => (
         <span className="text-sm text-muted-foreground">
           {row.role?.displayName ?? row.role?.name ?? '—'}
@@ -65,7 +65,7 @@ export default function UsersPage() {
     },
     {
       key: 'diamonds',
-      header: 'Balance',
+      header: 'Số Dư',
       cell: (row) => (
         <div className="flex items-center gap-1.5 text-sm font-medium text-amber-400">
           <Diamond className="h-3.5 w-3.5" />
@@ -75,12 +75,12 @@ export default function UsersPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: 'Trạng Thái',
       cell: (row) => <StatusBadge status={row.isBanned ? 'BANNED' : 'ACTIVE'} />,
     },
     {
       key: 'lastLogin',
-      header: 'Last Login',
+      header: 'Lần Đăng Nhập Cuối',
       cell: (row) => (
         <span className="text-sm text-muted-foreground">
           {row.lastLogin ? format(new Date(row.lastLogin), 'dd/MM/yyyy HH:mm') : '—'}
@@ -106,12 +106,12 @@ export default function UsersPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Users</h1>
+          <h1 className="text-2xl font-bold">Người Dùng</h1>
           <p className="text-sm text-muted-foreground">
-            Manage and monitor platform users
+            Quản lý và giám sát người dùng nền tảng
             {data && (
               <span className="ml-2 text-violet-400 font-medium">
-                ({data.total.toLocaleString()} total)
+                ({data.total.toLocaleString()} tổng cộng)
               </span>
             )}
           </p>
@@ -120,7 +120,7 @@ export default function UsersPage() {
 
       <div className="flex items-center gap-3">
         <SearchInput
-          placeholder="Search by username or email..."
+          placeholder="Tìm kiếm theo tên người dùng hoặc email..."
           onSearch={(v) => { setSearch(v); setPage(1); }}
         />
         <Select
@@ -128,12 +128,12 @@ export default function UsersPage() {
           onValueChange={(v) => { setBanFilter(v === 'all' ? '' : v); setPage(1); }}
         >
           <SelectTrigger className="w-36 h-9">
-            <SelectValue placeholder="All Status" />
+            <SelectValue placeholder="Tất Cả Trạng Thái" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Status</SelectItem>
-            <SelectItem value="active">Active</SelectItem>
-            <SelectItem value="banned">Banned</SelectItem>
+            <SelectItem value="all">Tất Cả Trạng Thái</SelectItem>
+            <SelectItem value="active">Đang Hoạt Động</SelectItem>
+            <SelectItem value="banned">Bị Cấm</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -144,7 +144,7 @@ export default function UsersPage() {
           data={data?.data ?? []}
           isLoading={isLoading}
           rowKey={(r) => r.id}
-          emptyMessage="No users found"
+          emptyMessage="Không tìm thấy người dùng nào"
         />
         {data && (
           <Pagination

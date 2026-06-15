@@ -16,8 +16,8 @@ import type { Category } from '@/types';
 import { Loader2, Upload, X } from 'lucide-react';
 
 const schema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  slug: z.string().min(1, 'Slug is required').regex(/^[a-z0-9-]+$/, 'Slug: lowercase, numbers, hyphens only'),
+  name: z.string().min(1, 'Tên là bắt buộc'),
+  slug: z.string().min(1, 'Slug là bắt buộc').regex(/^[a-z0-9-]+$/, 'Slug: chỉ chữ thường, số, dấu gạch ngang'),
   description: z.string().optional(),
   thumbnailUrl: z.string().optional(),
   isActive: z.boolean(),
@@ -37,8 +37,7 @@ export function CategoryModal({ open, onClose, category, mode }: CategoryModalPr
   const isEdit = mode === 'edit';
   const createMutation = useCreateCategory();
   const updateMutation = useUpdateCategory();
-  const uploadMutation = useUplo
-  adFile();
+  const uploadMutation = useUploadFile();
 
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [uploadingThumbnail, setUploadingThumbnail] = useState(false);
@@ -70,13 +69,13 @@ export function CategoryModal({ open, onClose, category, mode }: CategoryModalPr
 
     // Validate file type
     if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
-      toast.error('Only JPG, PNG, WebP allowed');
+      toast.error('Chỉ cho phép JPG, PNG, WebP');
       return;
     }
 
     // Validate file size (5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('File size must be less than 5MB');
+      toast.error('Kích thước tệp phải nhỏ hơn 5MB');
       return;
     }
 
@@ -101,32 +100,32 @@ export function CategoryModal({ open, onClose, category, mode }: CategoryModalPr
 
   const isPending = createMutation.isPending || updateMutation.isPending || uploadingThumbnail;
 
-  const titleMap = { create: 'Create Category', edit: 'Edit Category', view: 'Category Details' };
+  const titleMap = { create: 'Tạo Danh Mục', edit: 'Chỉnh Sửa Danh Mục', view: 'Chi Tiết Danh Mục' };
 
   return (
     <ModalWrapper open={open} onClose={onClose} title={titleMap[mode]} size="md">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label>Name</Label>
-            <Input {...register('name')} disabled={isView} placeholder="e.g. Gaming" />
+            <Label>Tên</Label>
+            <Input {...register('name')} disabled={isView} placeholder="ví dụ: Gaming" />
             {errors.name && <p className="text-xs text-red-400">{errors.name.message}</p>}
           </div>
           <div className="space-y-1.5">
             <Label>Slug</Label>
-            <Input {...register('slug')} disabled={isView} placeholder="e.g. gaming" />
+            <Input {...register('slug')} disabled={isView} placeholder="ví dụ: gaming" />
             {errors.slug && <p className="text-xs text-red-400">{errors.slug.message}</p>}
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <Label>Description</Label>
-          <Textarea {...register('description')} disabled={isView} rows={3} placeholder="Optional description" />
+          <Label>Mô Tả</Label>
+          <Textarea {...register('description')} disabled={isView} rows={3} placeholder="Mô tả tùy chọn" />
         </div>
 
         {/* Thumbnail Upload */}
         <div className="space-y-2">
-          <Label>Thumbnail</Label>
+          <Label>Hình Ảnh Đại Diện</Label>
           
           {/* Preview */}
           {previewUrl && (
@@ -154,13 +153,13 @@ export function CategoryModal({ open, onClose, category, mode }: CategoryModalPr
                 {uploadingThumbnail ? (
                   <>
                     <Loader2 className="h-8 w-8 animate-spin text-muted-foreground mb-2" />
-                    <p className="text-sm text-muted-foreground">Uploading...</p>
+                    <p className="text-sm text-muted-foreground">Đang tải lên...</p>
                   </>
                 ) : (
                   <>
                     <Upload className="h-8 w-8 text-muted-foreground mb-2" />
-                    <p className="text-sm text-muted-foreground">Click to upload thumbnail</p>
-                    <p className="text-xs text-muted-foreground">JPG, PNG, WebP (max 5MB)</p>
+                    <p className="text-sm text-muted-foreground">Nhấp để tải lên hình ảnh đại diện</p>
+                    <p className="text-xs text-muted-foreground">JPG, PNG, WebP (tối đa 5MB)</p>
                   </>
                 )}
               </div>
@@ -178,8 +177,8 @@ export function CategoryModal({ open, onClose, category, mode }: CategoryModalPr
         {/* Active Toggle */}
         <div className="flex items-center justify-between rounded-lg border border-border p-3">
           <div>
-            <p className="text-sm font-medium">Active</p>
-            <p className="text-xs text-muted-foreground">Visible to users</p>
+            <p className="text-sm font-medium">Hoạt Động</p>
+            <p className="text-xs text-muted-foreground">Hiển thị cho người dùng</p>
           </div>
           <Switch
             checked={watch('isActive')}
@@ -190,10 +189,10 @@ export function CategoryModal({ open, onClose, category, mode }: CategoryModalPr
 
         {!isView && (
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={onClose}>Hủy</Button>
             <Button type="submit" className="bg-violet-600 hover:bg-violet-700" disabled={isPending}>
               {isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              {mode === 'create' ? 'Create' : 'Save Changes'}
+              {mode === 'create' ? 'Tạo' : 'Lưu Thay Đổi'}
             </Button>
           </div>
         )}

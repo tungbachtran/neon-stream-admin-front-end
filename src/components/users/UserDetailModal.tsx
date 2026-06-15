@@ -39,7 +39,7 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
   };
 
   return (
-    <ModalWrapper open={open} onClose={onClose} title="User Details" size="lg">
+    <ModalWrapper open={open} onClose={onClose} title="Chi Tiết Người Dùng" size="lg">
       <div className="space-y-5 pt-2">
         {/* Profile */}
         <div className="flex items-center gap-4 p-4 rounded-lg bg-muted/30">
@@ -66,12 +66,12 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
         {/* Info Grid */}
         <div className="grid grid-cols-2 gap-3 text-sm">
           {[
-            { label: 'User ID', value: user.id },
-            { label: 'Role', value: user.role?.displayName ?? user.role?.name ?? '—' },
-            { label: 'Phone', value: user.phone ?? '—' },
-            { label: 'Verified', value: user.isVerified ? 'Yes' : 'No' },
-            { label: 'Last Login', value: user.lastLogin ? format(new Date(user.lastLogin), 'dd/MM/yyyy HH:mm') : '—' },
-            { label: 'Joined', value: format(new Date(user.createdAt), 'dd/MM/yyyy') },
+            { label: 'ID Người Dùng', value: user.id },
+            { label: 'Vai Trò', value: user.role?.displayName ?? user.role?.name ?? '—' },
+            { label: 'Số Điện Thoại', value: user.phone ?? '—' },
+            { label: 'Đã Xác Minh', value: user.isVerified ? 'Có' : 'Không' },
+            { label: 'Lần Đăng Nhập Cuối', value: user.lastLogin ? format(new Date(user.lastLogin), 'dd/MM/yyyy HH:mm') : '—' },
+            { label: 'Tham Gia', value: format(new Date(user.createdAt), 'dd/MM/yyyy') },
           ].map(({ label, value }) => (
             <div key={label} className="rounded-lg border border-border p-3">
               <p className="text-xs text-muted-foreground mb-0.5">{label}</p>
@@ -83,18 +83,18 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
         {/* Ban input */}
         {showBanInput && (
           <div className="space-y-1.5">
-            <Label>Ban Reason</Label>
+            <Label>Lý Do Cấm</Label>
             <Input
               value={banReason}
               onChange={(e) => setBanReason(e.target.value)}
-              placeholder="Enter reason for ban..."
+              placeholder="Nhập lý do cấm..."
             />
           </div>
         )}
 
         {/* Actions */}
         <div className="flex justify-end gap-2 pt-1">
-          <Button variant="outline" onClick={onClose}>Close</Button>
+          <Button variant="outline" onClick={onClose}>Đóng</Button>
           {user.isBanned ? (
             <Button
               className="bg-emerald-600 hover:bg-emerald-700"
@@ -102,23 +102,23 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
               disabled={unbanMutation.isPending}
             >
               {unbanMutation.isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              Unban User
+              Bỏ Cấm Người Dùng
             </Button>
           ) : showBanInput ? (
             <>
-              <Button variant="outline" onClick={() => setShowBanInput(false)}>Cancel</Button>
+              <Button variant="outline" onClick={() => setShowBanInput(false)}>Hủy</Button>
               <Button
                 variant="destructive"
                 onClick={handleBan}
                 disabled={banMutation.isPending}
               >
                 {banMutation.isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                Confirm Ban
+                Xác Nhận Cấm
               </Button>
             </>
           ) : (
             <Button variant="destructive" onClick={() => setShowBanInput(true)}>
-              Ban User
+              Cấm Người Dùng
             </Button>
           )}
         </div>

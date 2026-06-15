@@ -14,8 +14,8 @@ import { ShieldCheck, Loader2, AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 
 const schema = z.object({
-  identifier: z.string().min(1, 'Email or phone is required'),
-  password: z.string().min(1, 'Password is required'),
+  identifier: z.string().min(1, 'Email hoặc số điện thoại là bắt buộc'),
+  password: z.string().min(1, 'Mật khẩu là bắt buộc'),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -31,7 +31,7 @@ function ForbiddenAlert() {
     <Alert variant="destructive">
       <AlertCircle className="h-4 w-4" />
       <AlertDescription>
-        Access denied. Admin role required.
+        Truy cập bị từ chối. Yêu cầu vai trò quản trị viên.
       </AlertDescription>
     </Alert>
   );
@@ -69,9 +69,9 @@ export default function LoginPage() {
             <ShieldCheck className="h-6 w-6 text-white" />
           </div>
           <div className="text-center">
-            <h1 className="text-xl font-bold text-white">Admin Console</h1>
+            <h1 className="text-xl font-bold text-white">Bảng Điều Khiển Quản Trị</h1>
             <p className="text-sm text-muted-foreground">
-              System Overseer — Restricted Access
+              Giám Sát Hệ Thống — Truy Cập Hạn Chế
             </p>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function LoginPage() {
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-1.5">
-            <Label htmlFor="identifier">Email / Phone</Label>
+            <Label htmlFor="identifier">Email / Số Điện Thoại</Label>
             <Input
               id="identifier"
               placeholder="admin@example.com"
@@ -106,7 +106,7 @@ export default function LoginPage() {
             )}
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Mật Khẩu</Label>
             <Input
               id="password"
               type="password"
@@ -124,7 +124,7 @@ export default function LoginPage() {
             disabled={isSubmitting}
           >
             {isSubmitting && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            Sign In
+            Đăng Nhập
           </Button>
         </form>
       </div>

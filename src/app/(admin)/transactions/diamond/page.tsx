@@ -34,14 +34,14 @@ export default function DiamondTransactionsPage() {
   const columns: Column<DiamondTransaction>[] = [
     {
       key: 'txnRef',
-      header: 'TXN Ref',
+      header: 'Mã Giao Dịch',
       cell: (row) => (
         <span className="text-xs font-mono text-muted-foreground">{row.txnRef}</span>
       ),
     },
     {
       key: 'user',
-      header: 'User',
+      header: 'Người Dùng',
       cell: (row) => (
         <div>
           <p className="text-sm font-medium">{row.user?.username ?? row.userId.slice(0, 8)}</p>
@@ -51,7 +51,7 @@ export default function DiamondTransactionsPage() {
     },
     {
       key: 'package',
-      header: 'Package',
+      header: 'Gói',
       cell: (row) => (
         <div>
           <p className="text-sm font-medium">{row.diamondPackage}</p>
@@ -67,7 +67,7 @@ export default function DiamondTransactionsPage() {
     },
     {
       key: 'amount',
-      header: 'Amount',
+      header: 'Số Tiền',
       cell: (row) => (
         <span className="text-sm font-semibold">
           {row.amountVnd.toLocaleString('vi-VN')}₫
@@ -76,7 +76,7 @@ export default function DiamondTransactionsPage() {
     },
     {
       key: 'method',
-      header: 'Method',
+      header: 'Phương Thức',
       cell: (row) => (
         <span className="text-xs bg-muted px-2 py-0.5 rounded font-medium">
           {row.paymentMethod}
@@ -85,19 +85,19 @@ export default function DiamondTransactionsPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: 'Trạng Thái',
       cell: (row) => <StatusBadge status={row.status} />,
     },
     {
       key: 'bank',
-      header: 'Bank',
+      header: 'Ngân Hàng',
       cell: (row) => (
         <span className="text-sm text-muted-foreground">{row.vnpBankCode ?? '—'}</span>
       ),
     },
     {
       key: 'createdAt',
-      header: 'Date',
+      header: 'Ngày',
       cell: (row) => (
         <span className="text-sm text-muted-foreground">
           {format(new Date(row.createdAt), 'dd/MM/yyyy HH:mm')}
@@ -124,21 +124,21 @@ export default function DiamondTransactionsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Diamond Transactions</h1>
-        <p className="text-sm text-muted-foreground">Payment history and diamond recharge records</p>
+        <h1 className="text-2xl font-bold">Giao Dịch Kim Cương</h1>
+        <p className="text-sm text-muted-foreground">Lịch sử thanh toán và hồ sơ nạp kim cương</p>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
         <SearchInput
-          placeholder="Search by TXN ref or user..."
+          placeholder="Tìm kiếm theo mã giao dịch hoặc người dùng..."
           onSearch={(v) => { setSearch(v); setPage(1); }}
         />
         <Select value={status} onValueChange={(v) => { setStatus(v === 'ALL' ? '' : v); setPage(1); }}>
           <SelectTrigger className="w-36 h-9">
-            <SelectValue placeholder="All Status" />
+            <SelectValue placeholder="Tất Cả Trạng Thái" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="ALL">All Status</SelectItem>
+            <SelectItem value="ALL">Tất Cả Trạng Thái</SelectItem>
             {['PENDING', 'SUCCESS', 'FAILED', 'CANCELLED', 'REVERSED', 'SUSPICIOUS'].map((s) => (
               <SelectItem key={s} value={s}>{s}</SelectItem>
             ))}
@@ -162,7 +162,7 @@ export default function DiamondTransactionsPage() {
           data={data?.data ?? []}
           isLoading={isLoading}
           rowKey={(r) => r.id}
-          emptyMessage="No transactions found"
+          emptyMessage="Không tìm thấy giao dịch nào"
         />
         {data && (
           <Pagination

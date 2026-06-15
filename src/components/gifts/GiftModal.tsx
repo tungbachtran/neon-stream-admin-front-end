@@ -61,7 +61,7 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
 
     const result = await giftService.uploadIcon(file);
     setValue('iconUrl', result.publicUrl);
-    toast.success('Icon uploaded');
+    toast.success('Biểu tượng đã được tải lên');
   };
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm<FormData>({
@@ -98,11 +98,11 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
 
 
   return (
-    <ModalWrapper open={open} onClose={onClose} title={isView ? 'Gift Details' : mode === 'create' ? 'Create Gift' : 'Edit Gift'} size="md">
+    <ModalWrapper open={open} onClose={onClose} title={isView ? 'Chi Tiết Quà Tặng' : mode === 'create' ? 'Tạo Quà Tặng' : 'Chỉnh Sửa Quà Tặng'} size="md">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label>Name</Label>
+            <Label>Tên</Label>
             <Input {...register('name')} disabled={isView} />
             {errors.name && <p className="text-xs text-red-400">{errors.name.message}</p>}
           </div>
@@ -114,25 +114,25 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
 
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-1.5">
-            <Label>Diamond Cost</Label>
+            <Label>Giá Kim Cương</Label>
             <Input type="number" {...register('diamondCost')} disabled={isView} />
             {errors.diamondCost && <p className="text-xs text-red-400">{errors.diamondCost.message}</p>}
           </div>
           <div className="space-y-1.5">
-            <Label>Sort Order</Label>
+            <Label>Thứ Tự Sắp Xếp</Label>
             <Input type="number" {...register('sortOrder')} disabled={isView} />
           </div>
         </div>
 
         <div className="space-y-1.5">
-          <Label>Rarity</Label>
+          <Label>Độ Hiếm</Label>
           <Select
             value={watch('rarity')}
             onValueChange={(v) => setValue('rarity', v as any)}
             disabled={isView}
           >
             <SelectTrigger>
-              <SelectValue placeholder="Select rarity" />
+              <SelectValue placeholder="Chọn độ hiếm" />
             </SelectTrigger>
             <SelectContent>
               {['COMMON', 'RARE', 'EPIC', 'LEGENDARY'].map((r) => (
@@ -143,7 +143,7 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
         </div>
 
         <div className="space-y-1.5">
-          <Label>Icon</Label>
+          <Label>Biểu Tượng</Label>
 
           {watch('iconUrl') && (
             <div className="h-24 w-24 rounded-lg border overflow-hidden bg-muted">
@@ -161,7 +161,7 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
         </div>
 
         <div className="flex items-center justify-between rounded-lg border border-border p-3">
-          <p className="text-sm font-medium">Active</p>
+          <p className="text-sm font-medium">Hoạt Động</p>
           <Switch
             checked={watch('isActive')}
             onCheckedChange={(v) => setValue('isActive', v)}
@@ -171,10 +171,10 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
 
         {!isView && (
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={onClose}>Hủy</Button>
             <Button type="submit" className="bg-violet-600 hover:bg-violet-700" disabled={createMutation.isPending || updateMutation.isPending}>
             {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {mode === 'create' ? 'Create Gift' : 'Save Changes'}
+            {mode === 'create' ? 'Tạo Quà Tặng' : 'Lưu Thay Đổi'}
             </Button>
           </div>
         )}

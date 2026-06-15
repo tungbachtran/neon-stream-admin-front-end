@@ -22,7 +22,7 @@ export function DiamondTransactionDetailModal({
     );
 
     return (
-        <ModalWrapper open={open} onClose={onClose} title="Diamond Transaction Detail" size="lg">
+        <ModalWrapper open={open} onClose={onClose} title="Chi Tiết Giao Dịch Kim Cương" size="lg">
             {isLoading && (
                 <div className="flex justify-center py-10">
                     <Loader2 className="h-6 w-6 animate-spin" />
@@ -32,7 +32,7 @@ export function DiamondTransactionDetailModal({
             {data && (
                 <div className="space-y-5 pt-2">
                     <section className="rounded-lg border border-border p-4">
-                        <h3 className="mb-3 text-sm font-semibold">User</h3>
+                        <h3 className="mb-3 text-sm font-semibold">Người Dùng</h3>
                         <div className="flex items-center gap-3">
                             {data.user?.avatar && (
                                 <img
@@ -50,21 +50,21 @@ export function DiamondTransactionDetailModal({
                     </section>
 
                     <section className="grid grid-cols-2 gap-3 text-sm">
-                        <Info label="TXN Ref" value={data.txnRef} />
-                        <Info label="Status" value={<StatusBadge status={data.status} />} />
-                        <Info label="Package" value={data.diamondPackage} />
-                        <Info label="Diamonds" value={`${data.diamondAmount.toLocaleString()} + ${data.bonusDiamondAmount.toLocaleString()} bonus`} />
-                        <Info label="Amount" value={`${data.amountVnd.toLocaleString('vi-VN')}₫`} />
-                        <Info label="Payment Method" value={data.paymentMethod} />
-                        <Info label="Bank" value={data.vnpBankCode ?? '—'} />
-                        <Info label="VNP Transaction No" value={data.vnpTransactionNo ?? '—'} />
-                        <Info label="Bank Tran No" value={data.vnpBankTranNo ?? '—'} />
-                        <Info label="Card Type" value={data.vnpCardType ?? '—'} />
-                        <Info label="Response Code" value={data.vnpResponseCode ?? '—'} />
-                        <Info label="Pay Date" value={data.vnpPayDate ?? '—'} />
-                        <Info label="IPN Processed" value={data.ipnProcessed ? 'Yes' : 'No'} />
+                        <Info label="Mã Giao Dịch" value={data.txnRef} />
+                        <Info label="Trạng Thái" value={<StatusBadge status={data.status} />} />
+                        <Info label="Gói" value={data.diamondPackage} />
+                        <Info label="Kim Cương" value={`${data.diamondAmount.toLocaleString()} + ${data.bonusDiamondAmount.toLocaleString()} thưởng`} />
+                        <Info label="Số Tiền" value={`${data.amountVnd.toLocaleString('vi-VN')}₫`} />
+                        <Info label="Phương Thức Thanh Toán" value={data.paymentMethod} />
+                        <Info label="Ngân Hàng" value={data.vnpBankCode ?? '—'} />
+                        <Info label="Mã Giao Dịch VNP" value={data.vnpTransactionNo ?? '—'} />
+                        <Info label="Mã Giao Dịch Ngân Hàng" value={data.vnpBankTranNo ?? '—'} />
+                        <Info label="Loại Thẻ" value={data.vnpCardType ?? '—'} />
+                        <Info label="Mã Phản Hồi" value={data.vnpResponseCode ?? '—'} />
+                        <Info label="Ngày Thanh Toán" value={data.vnpPayDate ?? '—'} />
+                        <Info label="IPN Đã Xử Lý" value={data.ipnProcessed ? 'Có' : 'Không'} />
                         <Info
-                            label="Created At"
+                            label="Tạo Lúc"
                             value={format(new Date(data.createdAt), 'dd/MM/yyyy HH:mm:ss')}
                         />
                     </section>

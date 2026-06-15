@@ -48,10 +48,10 @@ export default function AdminLayout({
         </div>
         <div className="text-center space-y-1">
           <p className="text-sm font-medium text-foreground">
-            Verifying access...
+            Đang xác minh quyền truy cập...
           </p>
           <p className="text-xs text-muted-foreground">
-            Please wait a moment
+            Vui lòng chờ một lát
           </p>
         </div>
       </div>

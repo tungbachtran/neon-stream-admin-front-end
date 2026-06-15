@@ -13,13 +13,13 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 const navItems = [
-  { href: '/dashboard',                  label: 'Dashboard',          icon: LayoutDashboard },
-  { href: '/categories',                 label: 'Categories',         icon: Tag },
-  { href: '/gifts',                      label: 'Gifts',              icon: Gift },
-  { href: '/users',                      label: 'Users',              icon: Users },
-  { href: '/transactions/diamond',       label: 'Diamond Txns',       icon: CreditCard },
-  { href: '/transactions/gifts',         label: 'Gift Txns',          icon: Gift },
-  { href: '/support',                    label: 'Support Chat',       icon: MessageSquare },
+  { href: '/dashboard',                  label: 'Bảng Điều Khiển',     icon: LayoutDashboard },
+  { href: '/categories',                 label: 'Danh Mục',            icon: Tag },
+  { href: '/gifts',                      label: 'Quà Tặng',            icon: Gift },
+  { href: '/users',                      label: 'Người Dùng',          icon: Users },
+  { href: '/transactions/diamond',       label: 'Giao Dịch Kim Cương', icon: CreditCard },
+  { href: '/transactions/gifts',         label: 'Giao Dịch Quà Tặng',  icon: Gift },
+  { href: '/support',                    label: 'Hỗ Trợ Chat',        icon: MessageSquare },
 ];
 
 export function Sidebar() {
@@ -41,8 +41,8 @@ export function Sidebar() {
           <ShieldCheck className="h-5 w-5 text-white" />
         </div>
         <div>
-          <p className="text-sm font-semibold text-white">Admin Console</p>
-          <p className="text-xs text-muted-foreground">System Overseer</p>
+          <p className="text-sm font-semibold text-white">Bảng Điều Khiển Quản Trị</p>
+          <p className="text-xs text-muted-foreground">Giám Sát Hệ Thống</p>
         </div>
       </div>
 
@@ -75,7 +75,7 @@ export function Sidebar() {
           onClick={handleLogout}
         >
           <LogOut className="h-4 w-4" />
-          Log Out
+          Đăng Xuất
         </Button>
       </div>
     </aside>

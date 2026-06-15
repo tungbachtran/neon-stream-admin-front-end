@@ -44,10 +44,10 @@ export default function GiftsPage() {
     mutationFn: (id: string) => giftService.delete(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: GIFT_KEYS.all });
-      toast.success('Gift deleted');
+      toast.success('Quà tặng đã được xóa');
       setDeleteTarget(null);
     },
-    onError: (err: any) => toast.error(err.response?.data?.message || 'Failed'),
+    onError: (err: any) => toast.error(err.response?.data?.message || 'Thất bại'),
   });
 
   const openModal = (mode: 'edit' | 'view', gift: GiftCatalog) => {
@@ -66,7 +66,7 @@ export default function GiftsPage() {
   const columns: Column<GiftCatalog>[] = [
     {
       key: 'gift',
-      header: 'Gift',
+      header: 'Quà Tặng',
       cell: (row) => (
         <div className="flex items-center gap-3">
           <div className="h-9 w-9 rounded-lg bg-muted flex items-center justify-center text-xl">
@@ -81,7 +81,7 @@ export default function GiftsPage() {
     },
     {
       key: 'cost',
-      header: 'Cost',
+      header: 'Giá',
       cell: (row) => (
         <div className="flex items-center gap-1.5 text-sm font-medium text-amber-400">
           <Diamond className="h-3.5 w-3.5" />
@@ -91,17 +91,17 @@ export default function GiftsPage() {
     },
     {
       key: 'rarity',
-      header: 'Rarity',
+      header: 'Độ Hiếm',
       cell: (row) => <StatusBadge status={row.rarity} />,
     },
     {
       key: 'status',
-      header: 'Status',
+      header: 'Trạng Thái',
       cell: (row) => <StatusBadge status={row.isActive ? 'ACTIVE' : 'BANNED'} />,
     },
     {
       key: 'sortOrder',
-      header: 'Order',
+      header: 'Thứ Tự',
       cell: (row) => <span className="text-sm text-muted-foreground">{row.sortOrder}</span>,
     },
     {
@@ -117,16 +117,16 @@ export default function GiftsPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => openModal('view', row)}>
-              <Eye className="h-4 w-4 mr-2" /> View
+              <Eye className="h-4 w-4 mr-2" /> Xem
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => openModal('edit', row)}>
-              <Pencil className="h-4 w-4 mr-2" /> Edit
+              <Pencil className="h-4 w-4 mr-2" /> Chỉnh Sửa
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-red-400 focus:text-red-400"
               onClick={() => setDeleteTarget(row)}
             >
-              <Trash2 className="h-4 w-4 mr-2" /> Delete
+              <Trash2 className="h-4 w-4 mr-2" /> Xóa
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -138,8 +138,8 @@ export default function GiftsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Gifts</h1>
-          <p className="text-sm text-muted-foreground">Manage monetization gift catalog</p>
+          <h1 className="text-2xl font-bold">Quà Tặng</h1>
+          <p className="text-sm text-muted-foreground">Quản lý danh mục quà tặng kiếm tiền</p>
         </div>
       </div>
       <Button
@@ -150,20 +150,20 @@ export default function GiftsPage() {
           setModalOpen(true);
         }}
       >
-        Create Gift
+        Tạo Quà Tặng
       </Button>
 
       <div className="flex items-center gap-3">
         <SearchInput
-          placeholder="Search gifts..."
+          placeholder="Tìm kiếm quà tặng..."
           onSearch={(v) => { setSearch(v); setPage(1); }}
         />
         <Select value={rarity} onValueChange={(v) => { setRarity(v === 'ALL' ? '' : v); setPage(1); }}>
           <SelectTrigger className="w-36 h-9">
-            <SelectValue placeholder="All Rarities" />
+            <SelectValue placeholder="Tất Cả Độ Hiếm" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="ALL">All Rarities</SelectItem>
+            <SelectItem value="ALL">Tất Cả Độ Hiếm</SelectItem>
             {['COMMON', 'RARE', 'EPIC', 'LEGENDARY'].map((r) => (
               <SelectItem key={r} value={r}>{r}</SelectItem>
             ))}
@@ -177,7 +177,7 @@ export default function GiftsPage() {
           data={data?.data ?? []}
           isLoading={isLoading}
           rowKey={(r) => r.id}
-          emptyMessage="No gifts found"
+          emptyMessage="Không tìm thấy quà tặng nào"
         />
         {data && (
           <Pagination
@@ -200,18 +200,18 @@ export default function GiftsPage() {
       <AlertDialog open={!!deleteTarget} onOpenChange={(v) => !v && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Gift</AlertDialogTitle>
+            <AlertDialogTitle>Xóa Quà Tặng</AlertDialogTitle>
             <AlertDialogDescription>
-              Delete <strong>{deleteTarget?.name}</strong>? This cannot be undone.
+              Xóa <strong>{deleteTarget?.name}</strong>? Hành động này không thể hoàn tác.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-600 hover:bg-red-700"
               onClick={() => deleteTarget && deleteMutation.mutate(deleteTarget.id)}
             >
-              Delete
+              Xóa
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

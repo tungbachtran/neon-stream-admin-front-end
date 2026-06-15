@@ -19,15 +19,7 @@ export function Header({ title }: HeaderProps) {
         <Input className="pl-9 h-8 bg-muted/50 border-0 text-sm" placeholder="Search system..." />
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
-          <Bell className="h-4 w-4" />
-        </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
-          <Settings className="h-4 w-4" />
-        </Button>
-        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground">
-          <HelpCircle className="h-4 w-4" />
-        </Button>
+
         <div className="flex items-center gap-2 ml-2">
           <Avatar className="h-7 w-7">
             <AvatarImage src={user?.avatar ?? ''} />

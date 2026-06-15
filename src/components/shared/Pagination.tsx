@@ -17,8 +17,8 @@ export function Pagination({ page, totalPages, total, limit, onPageChange }: Pag
   return (
     <div className="flex items-center justify-between px-2 py-3">
       <p className="text-sm text-muted-foreground">
-        Showing <span className="font-medium">{from}–{to}</span> of{' '}
-        <span className="font-medium">{total}</span> results
+        Hiển thị <span className="font-medium">{from}–{to}</span> trong{' '}
+        <span className="font-medium">{total}</span> kết quả
       </p>
       <div className="flex items-center gap-1">
         <Button

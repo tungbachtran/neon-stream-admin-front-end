@@ -45,7 +45,7 @@ export default function CategoriesPage() {
   const columns: Column<Category>[] = [
     {
       key: 'name',
-      header: 'Name',
+      header: 'Tên',
       cell: (row) => (
         <div className="flex items-center gap-3">
           {row.thumbnailUrl ? (
@@ -64,7 +64,7 @@ export default function CategoriesPage() {
     },
     {
       key: 'description',
-      header: 'Description',
+      header: 'Mô Tả',
       cell: (row) => (
         <span className="text-sm text-muted-foreground line-clamp-1 max-w-[200px]">
           {row.description ?? '—'}
@@ -73,12 +73,12 @@ export default function CategoriesPage() {
     },
     {
       key: 'status',
-      header: 'Status',
+      header: 'Trạng Thái',
       cell: (row) => <StatusBadge status={row.isActive ? 'ACTIVE' : 'INACTIVE'} />,
     },
     {
       key: 'createdAt',
-      header: 'Created',
+      header: 'Ngày Tạo',
       cell: (row) => (
         <span className="text-sm text-muted-foreground">
           {format(new Date(row.createdAt), 'dd/MM/yyyy')}
@@ -98,16 +98,16 @@ export default function CategoriesPage() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => openModal('view', row)}>
-              <Eye className="h-4 w-4 mr-2" /> View
+              <Eye className="h-4 w-4 mr-2" /> Xem
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => openModal('edit', row)}>
-              <Pencil className="h-4 w-4 mr-2" /> Edit
+              <Pencil className="h-4 w-4 mr-2" /> Chỉnh Sửa
             </DropdownMenuItem>
             <DropdownMenuItem
               className="text-red-400 focus:text-red-400"
               onClick={() => setDeleteTarget(row)}
             >
-              <Trash2 className="h-4 w-4 mr-2" /> Delete
+              <Trash2 className="h-4 w-4 mr-2" /> Xóa
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -120,18 +120,18 @@ export default function CategoriesPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Categories</h1>
-          <p className="text-sm text-muted-foreground">Manage platform content categories</p>
+          <h1 className="text-2xl font-bold">Danh Mục</h1>
+          <p className="text-sm text-muted-foreground">Quản lý danh mục nội dung của nền tảng</p>
         </div>
         <Button className="bg-violet-600 hover:bg-violet-700" onClick={() => openModal('create')}>
-          <Plus className="h-4 w-4 mr-2" /> Add Category
+          <Plus className="h-4 w-4 mr-2" /> Thêm Danh Mục
         </Button>
       </div>
 
       {/* Filters */}
       <div className="flex items-center gap-3">
         <SearchInput
-          placeholder="Search categories..."
+          placeholder="Tìm kiếm danh mục..."
           onSearch={(v) => { setSearch(v); setPage(1); }}
         />
       </div>
@@ -143,7 +143,7 @@ export default function CategoriesPage() {
           data={data ?? []}
           isLoading={isLoading}
           rowKey={(r) => r.id}
-          emptyMessage="No categories found"
+          emptyMessage="Không tìm thấy danh mục nào"
         />
         {data && (
           <Pagination
@@ -168,14 +168,14 @@ export default function CategoriesPage() {
       <AlertDialog open={!!deleteTarget} onOpenChange={(v) => !v && setDeleteTarget(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Category</AlertDialogTitle>
+            <AlertDialogTitle>Xóa Danh Mục</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete <strong>{deleteTarget?.name}</strong>?
-              This action cannot be undone.
+              Bạn có chắc chắn muốn xóa <strong>{deleteTarget?.name}</strong>?
+              Hành động này không thể hoàn tác.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>Hủy</AlertDialogCancel>
             <AlertDialogAction
               className="bg-red-600 hover:bg-red-700"
               onClick={async () => {
@@ -185,7 +185,7 @@ export default function CategoriesPage() {
                 }
               }}
             >
-              Delete
+              Xóa
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
