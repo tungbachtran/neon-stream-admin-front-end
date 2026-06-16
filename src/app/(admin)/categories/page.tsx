@@ -140,7 +140,7 @@ export default function CategoriesPage() {
       <div className="rounded-xl border border-border bg-card">
         <DataTable
           columns={columns}
-          data={data ?? []}
+          data={data?.data ?? []}
           isLoading={isLoading}
           rowKey={(r) => r.id}
           emptyMessage="Không tìm thấy danh mục nào"
