@@ -40,31 +40,31 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
 
   return (
     <ModalWrapper open={open} onClose={onClose} title="Chi Tiết Người Dùng" size="lg">
-      <div className="space-y-5 pt-2">
+      <div className="space-y-4">
         {/* Profile */}
-        <div className="flex items-center gap-4 p-4 rounded-lg bg-muted/30">
-          <Avatar className="h-14 w-14">
+        <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/30">
+          <Avatar className="h-12 w-12 flex-shrink-0">
             <AvatarImage src={user.avatar ?? ''} />
-            <AvatarFallback className="bg-violet-600 text-white text-lg">
+            <AvatarFallback className="bg-violet-600 text-white text-sm">
               {user.username[0].toUpperCase()}
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-            <p className="font-semibold text-base">{user.username}</p>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <p className="font-semibold text-sm truncate">{user.username}</p>
               <StatusBadge status={user.isBanned ? 'BANNED' : 'ACTIVE'} />
             </div>
-            <p className="text-sm text-muted-foreground">{user.email}</p>
-            <p className="text-xs text-muted-foreground">{user.fullName}</p>
+            <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+            <p className="text-xs text-muted-foreground truncate">{user.fullName}</p>
           </div>
-          <div className="flex items-center gap-1.5 text-sm font-medium text-amber-400">
-            <Diamond className="h-4 w-4" />
-            {user.diamondBalance.toLocaleString()}
+          <div className="flex items-center gap-1 text-xs font-medium text-amber-400 flex-shrink-0">
+            <Diamond className="h-3.5 w-3.5" />
+            <span className="whitespace-nowrap">{user.diamondBalance.toLocaleString()}</span>
           </div>
         </div>
 
         {/* Info Grid */}
-        <div className="grid grid-cols-2 gap-3 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
           {[
             { label: 'ID Người Dùng', value: user.id },
             { label: 'Vai Trò', value: user.role?.displayName ?? user.role?.name ?? '—' },
@@ -73,9 +73,9 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
             { label: 'Lần Đăng Nhập Cuối', value: user.lastLogin ? format(new Date(user.lastLogin), 'dd/MM/yyyy HH:mm') : '—' },
             { label: 'Tham Gia', value: format(new Date(user.createdAt), 'dd/MM/yyyy') },
           ].map(({ label, value }) => (
-            <div key={label} className="rounded-lg border border-border p-3">
+            <div key={label} className="rounded-lg border border-border p-2.5">
               <p className="text-xs text-muted-foreground mb-0.5">{label}</p>
-              <p className="font-medium truncate">{value}</p>
+              <p className="font-medium truncate text-xs">{value}</p>
             </div>
           ))}
         </div>
@@ -83,41 +83,44 @@ export function UserDetailModal({ open, onClose, user }: UserDetailModalProps) {
         {/* Ban input */}
         {showBanInput && (
           <div className="space-y-1.5">
-            <Label>Lý Do Cấm</Label>
+            <Label className="text-xs">Lý Do Cấm</Label>
             <Input
               value={banReason}
               onChange={(e) => setBanReason(e.target.value)}
               placeholder="Nhập lý do cấm..."
+              className="text-sm"
             />
           </div>
         )}
 
         {/* Actions */}
-        <div className="flex justify-end gap-2 pt-1">
-          <Button variant="outline" onClick={onClose}>Đóng</Button>
+        <div className="flex justify-end gap-2 pt-2">
+          <Button variant="outline" onClick={onClose} size="sm">Đóng</Button>
           {user.isBanned ? (
             <Button
               className="bg-emerald-600 hover:bg-emerald-700"
               onClick={handleUnban}
               disabled={unbanMutation.isPending}
+              size="sm"
             >
-              {unbanMutation.isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-              Bỏ Cấm Người Dùng
+              {unbanMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin mr-2" />}
+              Bỏ Cấm
             </Button>
           ) : showBanInput ? (
             <>
-              <Button variant="outline" onClick={() => setShowBanInput(false)}>Hủy</Button>
+              <Button variant="outline" onClick={() => setShowBanInput(false)} size="sm">Hủy</Button>
               <Button
                 variant="destructive"
                 onClick={handleBan}
                 disabled={banMutation.isPending}
+                size="sm"
               >
-                {banMutation.isPending && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-                Xác Nhận Cấm
+                {banMutation.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin mr-2" />}
+                Xác Nhận
               </Button>
             </>
           ) : (
-            <Button variant="destructive" onClick={() => setShowBanInput(true)}>
+            <Button variant="destructive" onClick={() => setShowBanInput(true)} size="sm">
               Cấm Người Dùng
             </Button>
           )}

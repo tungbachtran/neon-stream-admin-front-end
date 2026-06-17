@@ -33,7 +33,7 @@ export function GiftTransactionDetailModal({
         <div className="space-y-5 pt-2">
           <section className="rounded-lg border border-border p-4">
             <h3 className="mb-3 text-sm font-semibold">Chuyển Giao</h3>
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col items-center justify-between gap-4">
               <UserCard title="Người Gửi" user={data.sender} fallback={data.senderId} />
               <ArrowRight className="h-5 w-5 text-muted-foreground" />
               <UserCard title="Người Nhận" user={data.receiver} fallback={data.receiverId} />

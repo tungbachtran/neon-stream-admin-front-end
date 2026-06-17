@@ -96,72 +96,70 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
     }
   }, [gift, open, mode, reset]);
 
-
   return (
     <ModalWrapper open={open} onClose={onClose} title={isView ? 'Chi Tiết Quà Tặng' : mode === 'create' ? 'Tạo Quà Tặng' : 'Chỉnh Sửa Quà Tặng'} size="md">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 pt-2">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <Label>Tên</Label>
-            <Input {...register('name')} disabled={isView} />
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-1">
+            <Label className="text-xs">Tên</Label>
+            <Input {...register('name')} disabled={isView} className="text-sm h-8" />
             {errors.name && <p className="text-xs text-red-400">{errors.name.message}</p>}
           </div>
-          <div className="space-y-1.5">
-            <Label>Emoji</Label>
-            <Input {...register('emoji')} disabled={isView} />
+          <div className="space-y-1">
+            <Label className="text-xs">Emoji</Label>
+            <Input {...register('emoji')} disabled={isView} className="text-sm h-8" />
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-1.5">
-            <Label>Giá Kim Cương</Label>
-            <Input type="number" {...register('diamondCost')} disabled={isView} />
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-1">
+            <Label className="text-xs">Giá Kim Cương</Label>
+            <Input type="number" {...register('diamondCost')} disabled={isView} className="text-sm h-8" />
             {errors.diamondCost && <p className="text-xs text-red-400">{errors.diamondCost.message}</p>}
           </div>
-          <div className="space-y-1.5">
-            <Label>Thứ Tự Sắp Xếp</Label>
-            <Input type="number" {...register('sortOrder')} disabled={isView} />
+          <div className="space-y-1">
+            <Label className="text-xs">Thứ Tự</Label>
+            <Input type="number" {...register('sortOrder')} disabled={isView} className="text-sm h-8" />
           </div>
         </div>
 
-        <div className="space-y-1.5">
-          <Label>Độ Hiếm</Label>
+        <div className="space-y-1">
+          <Label className="text-xs">Độ Hiếm</Label>
           <Select
             value={watch('rarity')}
             onValueChange={(v) => setValue('rarity', v as any)}
             disabled={isView}
           >
-            <SelectTrigger>
+            <SelectTrigger className="text-sm h-8">
               <SelectValue placeholder="Chọn độ hiếm" />
             </SelectTrigger>
             <SelectContent>
               {['COMMON', 'RARE', 'EPIC', 'LEGENDARY'].map((r) => (
-                <SelectItem key={r} value={r}>{r}</SelectItem>
+                <SelectItem key={r} value={r} className="text-xs">{r}</SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
 
-        <div className="space-y-1.5">
-          <Label>Biểu Tượng</Label>
-
+        <div className="space-y-1">
+          <Label className="text-xs">Biểu Tượng</Label>
           {watch('iconUrl') && (
-            <div className="h-24 w-24 rounded-lg border overflow-hidden bg-muted">
+            <div className="h-16 w-16 rounded-lg border overflow-hidden bg-muted">
               <img src={watch('iconUrl')} alt="gift icon" className="h-full w-full object-cover" />
             </div>
           )}
-
           {!isView && (
             <Input
               type="file"
               accept="image/jpeg,image/png,image/webp"
               onChange={handleIconUpload}
+              className="text-xs h-8"
             />
           )}
         </div>
 
-        <div className="flex items-center justify-between rounded-lg border border-border p-3">
-          <p className="text-sm font-medium">Hoạt Động</p>
+        <div className="flex items-center justify-between rounded-lg border border-border p-2.5">
+          <p className="text-xs font-medium">Hoạt Động</p>
           <Switch
             checked={watch('isActive')}
             onCheckedChange={(v) => setValue('isActive', v)}
@@ -171,10 +169,10 @@ export function GiftModal({ open, onClose, gift, mode }: GiftModalProps) {
 
         {!isView && (
           <div className="flex justify-end gap-2 pt-2">
-            <Button type="button" variant="outline" onClick={onClose}>Hủy</Button>
-            <Button type="submit" className="bg-violet-600 hover:bg-violet-700" disabled={createMutation.isPending || updateMutation.isPending}>
-            {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-4 w-4 animate-spin mr-2" />}
-            {mode === 'create' ? 'Tạo Quà Tặng' : 'Lưu Thay Đổi'}
+            <Button type="button" variant="outline" onClick={onClose} size="sm">Hủy</Button>
+            <Button type="submit" className="bg-violet-600 hover:bg-violet-700" size="sm" disabled={createMutation.isPending || updateMutation.isPending}>
+              {(createMutation.isPending || updateMutation.isPending) && <Loader2 className="h-3.5 w-3.5 animate-spin mr-2" />}
+              {mode === 'create' ? 'Tạo' : 'Lưu'}
             </Button>
           </div>
         )}
