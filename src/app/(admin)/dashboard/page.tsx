@@ -83,11 +83,11 @@ export default function DashboardPage() {
               iconColor="bg-violet-500/15 text-violet-400"
             />
             <StatCard
-              title="Doanh Thu Hôm Nay"
-              value={`$${data?.todayRevenue.toLocaleString() ?? '—'}`}
-              sub={`+$${data?.revenueGrowth ?? 0} kể từ nửa đêm`}
-              icon={DollarSign}
-              iconColor="bg-emerald-500/15 text-emerald-400"
+              title="Kim Cương Hôm Nay"
+              value={`💎 ${data?.todayRevenue.toLocaleString() ?? '—'}`}
+              sub={`+${data?.revenueGrowth.toLocaleString() ?? 0} 💎 kể từ nửa đêm`}
+              icon={Diamond}                              // ← đổi icon
+              iconColor="bg-pink-500/15 text-pink-400"   // ← đổi màu
             />
           </>
         )}

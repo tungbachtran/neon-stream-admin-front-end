@@ -13,11 +13,8 @@ export function Header({ title }: HeaderProps) {
   const user = useAppSelector((s) => s.auth.user);
 
   return (
-    <header className="flex items-center justify-between h-14 px-6 border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-30">
-      <div className="relative w-72">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input className="pl-9 h-8 bg-muted/50 border-0 text-sm" placeholder="Search system..." />
-      </div>
+    <header className="flex items-center justify-end h-14 px-6 border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-30 p-10">
+
       <div className="flex items-center gap-2">
 
         <div className="flex items-center gap-2 ml-2">
